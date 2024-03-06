@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType.String;
@@ -21,12 +23,17 @@ namespace BSTintVers1
             t.Insert(60);
             t.Insert(150);
             t.Insert(500);
+            t.Insert(70);
             int y = t.X(t.root);   // hvad udfører X - giv et bud før du indtaster prog og checker.
             Console.WriteLine("y er " + y);
             t.Print();
-            
-            int sum = t.PrintSum(t.root);
-            Console.WriteLine(sum.ToString());
+
+            Console.WriteLine("\nSUM\n" + t.Sum());
+
+            Console.WriteLine("\nPrint leafs");
+            t.PrintLeaves();
+
+            Console.WriteLine("\nMAX\n" + t.MaxNodeValue());
 
             Console.ReadKey();
         }
@@ -68,13 +75,20 @@ namespace BSTintVers1
                 root.PrintNode();
         }
 
-        public int PrintSum(Node r)
+        public int Sum()
         {
-            if (r != null)
-            {
-                return r.Sum();
-            }
-            return 0;
+            return root.CalcSum(root);
+        }
+
+        public void PrintLeaves()
+        {
+            if (root != null)
+                root.Leaf();
+        }
+
+        public int MaxNodeValue()
+        {
+            return root.MaxValue(root);
         }
 
         public class Node
@@ -107,14 +121,36 @@ namespace BSTintVers1
                     right.PrintNode();
             }
 
-            public int Sum()
+            public int CalcSum(Node node)
             {
-                Console.WriteLine(data);
-                if (left != null)
+                int sum = 0;
+                if (node != null)
                 {
-                    return data + left.Sum() + right.Sum();
+                    sum += node.data;
+                    sum += CalcSum(node.left);
+                    sum += CalcSum(node.right);
+                    return sum;
                 }
-                return data;
+                return 0;
+            }
+
+            public void Leaf()
+            {
+                if (left == null && right == null)
+                    Console.WriteLine(data);
+
+                if (left != null)
+                    left.Leaf();
+
+                if (right != null)
+                    right.Leaf();
+            }
+
+            public int MaxValue(Node node)
+            {
+                if (node.right == null)
+                    return node.data;
+                return MaxValue(node.right);
             }
         }
     }
