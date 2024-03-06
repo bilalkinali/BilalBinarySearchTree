@@ -6,8 +6,7 @@ using System.Linq;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType.String;
 
-// Simpelt binaert soegetre
-// Datamatikeruddannelsen i Vejle, Per Larsen
+// To use other type that int, see Deitel page. 777 using ICompariable Objects and CompareTo
 
 namespace BSTintVers1
 {
@@ -126,9 +125,9 @@ namespace BSTintVers1
                 int sum = 0;
                 if (node != null)
                 {
-                    sum += node.data;
-                    sum += CalcSum(node.left);
-                    sum += CalcSum(node.right);
+                    sum += node.data;           // Console.WriteLine(node.data + " ")   <-- PreOrder    print --*
+                    sum += CalcSum(node.left);  // Console.WriteLine(node.data + " ")   v-- InOrder     print --*
+                    sum += CalcSum(node.right); // Console.WriteLine(node.data + " ")   v-- PostOrder   print --*
                     return sum;
                 }
                 return 0;
