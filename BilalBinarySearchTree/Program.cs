@@ -43,10 +43,7 @@ namespace BSTintVers1
     {
         public Node root;
 
-        public Tree()
-        {
-            root = null;
-        }
+        public Tree() { root = null; }
 
         public int X(Node r)
         {
@@ -74,10 +71,7 @@ namespace BSTintVers1
                 root.PrintNode();
         }
 
-        public int Sum()
-        {
-            return root.CalcSum(root);
-        }
+        public int Sum() { return root.CalcSum(root); }
 
         public void PrintLeaves()
         {
@@ -85,10 +79,7 @@ namespace BSTintVers1
                 root.Leaf();
         }
 
-        public int MaxNodeValue()
-        {
-            return root.MaxValue(root);
-        }
+        public int MaxNodeValue() { return root.MaxValue(); }
 
         public class Node
         {
@@ -125,6 +116,7 @@ namespace BSTintVers1
                 int sum = 0;
                 if (node != null)
                 {
+                    
                     sum += node.data;           // Console.WriteLine(node.data + " ")   <-- PreOrder    print --*
                     sum += CalcSum(node.left);  // Console.WriteLine(node.data + " ")   v-- InOrder     print --*
                     sum += CalcSum(node.right); // Console.WriteLine(node.data + " ")   v-- PostOrder   print --*
@@ -145,11 +137,11 @@ namespace BSTintVers1
                     right.Leaf();
             }
 
-            public int MaxValue(Node node)
+            public int MaxValue()
             {
-                if (node.right == null)
-                    return node.data;
-                return MaxValue(node.right);
+                if (right == null)
+                    return data;
+                return right.MaxValue();
             }
         }
     }
